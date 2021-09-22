@@ -1,0 +1,54 @@
+<html>
+<head>
+    <link rel="stylesheet" href="./flex.css">
+    <style>
+        .stage {
+            margin-top: 20px;
+
+        }
+        .rect {        
+            background: magenta;
+            display: inline-block;
+            text-align: center;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex-row space-around stage">
+        <span class="rect">WEE</span>
+    </div>
+    <script type="module">
+        import {remap} from "./lerpy.js"; 
+        let x = 0; 
+        let y = 0;
+        let rect = document.querySelector('.rect');
+        window.rect = rect;
+        let tau = Math.PI * 2;
+        window.addEventListener("mousemove", function (e) { 
+            x = e.x; 
+            y = e.y; 
+
+            //let degrees = remap(0,window.innerWidth,0,360,x);
+            //degrees = Math.round(degrees);
+            //let rotateString = `rotate(${degrees}deg)`;
+            //console.log
+            //console.log('x',x,'deg',degrees,'rect',rect,'rs',rotateString);
+
+            //let radX = remap(0,window.innerWidth,0,Math.PI,x);
+            let radX = remap(20,window.innerWidth-20,0,Math.PI,x,true);
+            let rotateString = `rotate(${radX}rad)`;
+            //doc: https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate()
+
+            let radY = remap(0,window.innerHeight,0, tau,y);
+            let bgColorString = `hsl(${radY}rad,50%,50%)`;
+            let fgColorString = `hsl(${radY+tau/3}rad,50%,50%)`;
+            //doc: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hsl()
+
+            rect.style.transform = rotateString;
+            rect.style.backgroundColor = bgColorString;
+            rect.style.color = fgColorString;
+        });
+    </script>
+</body>
+</html>
